@@ -1,4 +1,6 @@
-<!-- templates/cakes/cake_form.html -->
+{% extends '../base.html' %}
+
+{% block content %}
 <h1>{% if cake %}Update{% else %}Create{% endif %} Cake</h1>
 <form method="post">
   {% csrf_token %}
@@ -6,3 +8,6 @@
   <button type="submit">Save</button>
 </form>
 <a href="{% url 'cake_list' %}">Cancel</a>
+
+
+{% endblock %}

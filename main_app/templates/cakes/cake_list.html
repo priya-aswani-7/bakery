@@ -1,4 +1,6 @@
-<!-- templates/cakes/cake_list.html -->
+{% extends '../base.html' %}
+
+{% block content %}
 <h1>All Cakes</h1>
 <ul>
   {% for cake in cakes %}
@@ -8,3 +10,5 @@
   {% endfor %}
 </ul>
 <a href="{% url 'cake_create' %}">Add New Cake</a>
+
+{% endblock %}

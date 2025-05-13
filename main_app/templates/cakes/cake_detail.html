@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ cake.name }}</title>
-</head>
-<body>
+{% extends '../base.html' %}
+
+{% block content %}
     <div class="container">
         <div class="cake-header">
             <h1>{{ cake.name }}</h1>
@@ -17,5 +14,4 @@
         
         <a href="{% url 'cake_list' %}" class="back-link">← Back to All Cakes</a>
     </div>
-</body>
-</html>
+{% endblock %}
