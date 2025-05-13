@@ -1,0 +1,10 @@
+<!-- templates/cakes/cake_list.html -->
+<h1>All Cakes</h1>
+<ul>
+  {% for cake in cakes %}
+    <li>
+      <a href="{% url 'cake_detail' cake.pk %}">{{ cake.name }} - {{ cake.flavor }} (${{ cake.price }})</a>
+    </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'cake_create' %}">Add New Cake</a>

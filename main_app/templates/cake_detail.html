@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ cake.name }}</title>
+</head>
+<body>
+    <div class="container">
+        <div class="cake-header">
+            <h1>{{ cake.name }}</h1>
+            <span class="cake-price">${{ cake.price }}</span>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="{% url 'cake_update' cake.pk %}">Edit</a>
+            <a href="{% url 'cake_delete' cake.pk %}" class="delete">Delete</a>
+        </div>
+        
+        <a href="{% url 'cake_list' %}" class="back-link">← Back to All Cakes</a>
+    </div>
+</body>
+</html>
