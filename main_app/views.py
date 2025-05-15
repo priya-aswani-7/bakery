@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView, EditView, DeleteView
 from django.utils import reverse_lazy
-from models import Cake
-
-# Create your views here.
+from models import Cake, Customer
 
 # list view of cakes
 class CakeListView(ListView):
