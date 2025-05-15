@@ -1,10 +1,9 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from django.shortcuts import render
 from .models import Cake
 
-def home_view(request):
-    return render(request, 'base.html')
+class HomeView(TemplateView):
+    template_name = 'base.html'
 
 class CakeListView(ListView):
     model = Cake
