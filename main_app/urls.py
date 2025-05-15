@@ -1,10 +1,17 @@
 from django.urls import path
-from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView, CakeDeleteView)
+from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView, CakeDeleteView, 
+                    CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView)
 
 urlpatterns = [
     path('cakes/', CakeListView.as_view(), name='cake_list'),
     path('cakes/create', CakeCreateView.as_view(), name='cake_create'),
     path('cakes/<int:pk>', CakeDetailView.as_view(), name='cake_detail'),
     path('cakes/<int:pk>/edit', CakeUpdateView.as_view(), name='cake_update'),
-    path('cakes/<int:pk>/delete', CakeDeleteView.as_view(), name='cake_delete')       
+    path('cakes/<int:pk>/delete', CakeDeleteView.as_view(), name='cake_delete'),
+    
+    path('customers/', CustomerListView.as_view(), name='customer_list'),
+    path('customers/create', CustomerCreateView.as_view(), name='customer_create'),
+    path('customers/<int:pk>', CustomerDetailView.as_view(), name='customer_detail'),
+    path('customers/<int:pk>/edit', CustomerUpdateView.as_view(), name='customer_update'),
+    path('customers/<int:pk>/delete', CustomerDeleteView.as_view(), name='customer_delete'),
 ]
