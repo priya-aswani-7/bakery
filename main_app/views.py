@@ -29,6 +29,7 @@ class CakeUpdateView(UpdateView):
     model=Cake
     template_name='./cakes/cake_form.html'
     context_object_name='cake'
+    fields='__all__'
     success_url=reverse_lazy('cake_detail')
     
 # delete cake
