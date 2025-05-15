@@ -1,0 +1,15 @@
+{% extends '../base.html' %}
+{% block content %}
+<h2>
+    {% if cake %}
+    Edit Cake
+    {% else %}
+    Add Cake
+    {% endif %}
+</h2>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

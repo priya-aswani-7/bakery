@@ -21,6 +21,7 @@ class CakeDetailView(DetailView):
 class CakeCreateView(CreateView):
     model=Cake
     template_name='./cakes/cake_form.html'
+    fields='__all__'
     success_url=reverse_lazy('cake_list')
 
 # edit cake 
