@@ -82,7 +82,7 @@ Visit `http://127.0.0.1:8000/` to view the app.
 
 ## 🖼️ Entity Relationship Diagram
 
-![alt text](<Blank diagram (2).png>)
+![ERD](https://github.com/priya-aswani-7/bakery/blob/main/ERD.png)
 
 
 ## 📌 Learning Goals
