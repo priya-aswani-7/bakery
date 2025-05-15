@@ -4,7 +4,7 @@
 <p>Price: {{cake.price}}</p>
 <p>Available: {{cake.available}}</p>
 
-<form action="" method="POST">
+<form action="" method="">
     {% csrf_token %}
     <a href="{% url 'cake_update' cake.pk %}">Edit</a> | <a href="{% url 'cake_delete' cake.pk %}">Delete</a>
 </form>
