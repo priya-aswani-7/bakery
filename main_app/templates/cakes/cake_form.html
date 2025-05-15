@@ -1,13 +1,10 @@
 {% extends '../base.html' %}
-
 {% block content %}
-<h1>{% if cake %}Update{% else %}Create{% endif %} Cake</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
+<h1>{% if cake %}Edit Cake {% else %}Add Cake {% endif %}</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Save</button>
+    <a href="{% url 'cake_list' %}">Cancel</a>
 </form>
-<a href="{% url 'cake_list' %}">Cancel</a>
-
-
 {% endblock %}

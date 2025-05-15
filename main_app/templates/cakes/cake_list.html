@@ -1,14 +1,12 @@
 {% extends '../base.html' %}
-
 {% block content %}
-<h1>All Cakes</h1>
-<ul>
-  {% for cake in cakes %}
-    <li>
-      <a href="{% url 'cake_detail' cake.pk %}">{{ cake.name }} - {{ cake.flavor }} (${{ cake.price }})</a>
-    </li>
-  {% endfor %}
-</ul>
-<a href="{% url 'cake_create' %}">Add New Cake</a>
+<div>
+    <ul>
+    {% for cake in cakes %}
+        <a href="{% url 'cake_detail' cake.pk %}"><li>{{cake.name}} ({{cake.flavor}}) - ${{cake.price}}</li></a>
+    {% endfor %}
+    </ul>
 
+    <a href="{% url 'cake_create' %}">Add a new cake</a>
+</div>
 {% endblock %}

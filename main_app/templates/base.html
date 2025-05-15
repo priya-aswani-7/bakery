@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Bakery App</title>
-</head>
-<body>
-    <h1>Welcome to the Bakery</h1>
-    
-    <nav>
-        <a href="/">Home</a> |
-        <a href="{% url 'cake_list' %}">Cakes</a>
-    </nav>
-    <br>
-    <hr>
+<html lang="en">
 
-    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% block head %}
     {% endblock %}
+</head>
+
+<body>
+    <h1>🧁 Welcome to the Bakery</h1>
+    <nav>
+        <u>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="{% url 'cake_list' %}">
+                <li>Cakes</li>
+            </a>
+        </u>
+    </nav>
+    <br />
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 </body>
+
 </html>

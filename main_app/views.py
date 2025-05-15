@@ -1,6 +1,10 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import render
 from .models import Cake
+
+def home_view(request):
+    return render(request, 'base.html')
 
 class CakeListView(ListView):
     model = Cake
@@ -16,6 +20,7 @@ class CakeCreateView(CreateView):
     model = Cake
     template_name = 'cakes/cake_form.html'
     fields = '__all__'
+    success_url=reverse_lazy('cake_list')
 
 class CakeUpdateView(UpdateView):
     model = Cake
@@ -26,5 +31,4 @@ class CakeUpdateView(UpdateView):
 class CakeDeleteView(DeleteView): 
     model = Cake
     template_name = 'cakes/cake_confirm_delete.html'
-    context_object_name = 'cake'
     success_url = reverse_lazy('cake_list')
