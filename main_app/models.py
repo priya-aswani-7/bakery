@@ -12,3 +12,6 @@ class Customer(models.Model):
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
 
+class Order(models.Model):
+    order_date = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
