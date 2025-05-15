@@ -82,7 +82,7 @@ Visit `http://127.0.0.1:8000/` to view the app.
 
 ## 🖼️ Entity Relationship Diagram
 
-("C:\Users\Priya\Downloads\Blank diagram (2).png")
+![alt text](<Blank diagram (2).png>)
 
 
 ## 📌 Learning Goals
