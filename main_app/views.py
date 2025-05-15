@@ -1,6 +1,9 @@
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from .models import Cake, Customer
+
+class HomeView(TemplateView):
+    template_name = './base.html'
 
 # list view of cakes
 class CakeListView(ListView):
