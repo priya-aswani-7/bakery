@@ -12,18 +12,23 @@
 <body>
     <h1>🧁 Welcome to the Bakery</h1>
     <nav>
-        <u>
+        
             <a href="/">
-                <li>Home</li>
-            </a>
+                Home
+            </a> | 
             <a href="{% url 'cake_list' %}">
-                <li>Cakes</li>
-            </a>
-        </u>
+                Cakes
+            </a> | 
+            <a href="{% url 'customer_list' %}">Customers</a>
+        
     </nav>
     <br />
+    <hr>
+    <br>
     <main>
         {% block content %}
+        <h2>🥯☕ Thank you for joining us! We're so happy you're here! </h2>
+        <p>Explore our website today!! 🚀</p>
         {% endblock %}
     </main>
 </body>

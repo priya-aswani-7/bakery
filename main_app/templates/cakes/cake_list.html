@@ -1,6 +1,7 @@
 {% extends '../base.html' %}
 {% block content %}
 <div>
+    <h2>🍰 Cakes </h2>
     <ul>
     {% for cake in cakes %}
         <a href="{% url 'cake_detail' cake.pk %}"><li>{{cake.name}} ({{cake.flavor}}) - ${{cake.price}}</li></a>
