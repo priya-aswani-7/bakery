@@ -44,19 +44,13 @@ pipenv shell
 pip install django
 ```
 
-### 4. Start the Django project
-
-```bash
-django-admin startproject bakery .
-```
-
-### 5. Create the app
+### 4. Create the app
 
 ```bash
 python manage.py startapp main_app
 ```
 
-### 6. Run migrations and start the server
+### 5. Run migrations and start the server
 
 ```bash
 python manage.py migrate
