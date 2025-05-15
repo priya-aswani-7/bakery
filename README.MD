@@ -1,4 +1,3 @@
-```markdown
 # 🧁 The Bakery – A Django CRUD Learning Project
 
 Welcome to **The Bakery**, a simple Django web app built to help beginners learn how to implement basic CRUD (Create, Read, Update, Delete) functionality. This project focuses on managing cakes, customers, and orders in a fictional bakery.
