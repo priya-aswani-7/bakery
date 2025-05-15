@@ -28,8 +28,8 @@ This project teaches the core of Django web development by building a minimal ba
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/the-bakery.git
-cd the-bakery
+git clone https://github.com/priya-aswani-7/bakery.git
+cd bakery
 ````
 
 ### 2. Create and activate a virtual environment
@@ -79,6 +79,11 @@ Visit `http://127.0.0.1:8000/` to view the app.
 | Place order  | Order    | Connect customer + cake + quantity       |
 
 ---
+
+## 🖼️ Entity Relationship Diagram
+
+("C:\Users\Priya\Downloads\Blank diagram (2).png")
+
 
 ## 📌 Learning Goals
 
