@@ -33,3 +33,35 @@ class CakeDeleteView(DeleteView):
     template_name='./cakes/cake_confirm_delete.html'
     context_object_name='cake'
     success_url=reverse_lazy('cake_list')
+    
+# list of customers
+class CustomerListView(ListView):
+    model=Customer
+    template_name='./customers/customer_list.html'
+    context_object_name='customers'
+
+# detailed view of customer
+class CustomerDetailView(DetailView):
+    model=Customer
+    template_name='./customers/customer_detail.html'
+    context_object_name='customer'
+    
+# create a customer
+class CustomerCreateView(CreateView):
+    model=Customer
+    template_name='./customers/customer_form.html'
+    success_url=reverse_lazy('customer_list')
+
+# update a customer
+class CustomerEditView(EditView):
+    model=Customer
+    template_name='./customers/customer_form.html'
+    context_object_name='customer'
+    success_url=reverse_lazy('customer_detail')
+    
+# delete a customer
+class CustomerDeleteView(DeleteView):
+    model=Customer
+    template_name='./customers/customer_confirm_delete.html'
+    context_object_name='customer'
+    success_url=reverse_lazy('customer_list')
