@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from .models import Cake, Customer, Order, OrderItem
 from django.shortcuts import render, redirect, get_object_or_404
+from django.forms import modelform_factory
 
 class HomeView(TemplateView):
     template_name = 'base.html'
@@ -74,17 +75,43 @@ class OrderDetailView(DetailView):
     template_name = 'order_detail.html'
     context_object_name = 'order'
 
-class OrderCreateView(CreateView):
-    model = Order
-    fields = ['customer', 'order_date', 'cakes']
-    template_name = 'order_form.html'
-    success_url = reverse_lazy('order_list')
+def order_form_view(request, pk=None):
+    OrderForm = modelform_factory(Order, fields=['customer', 'order_date'])
+    if pk:
+        order = get_object_or_404(Order, pk=pk)
+        is_update = True
+    else:
+        order = None
+        is_update = False
 
-class OrderUpdateView(UpdateView):
-    model = Order
-    fields = ['customer', 'order_date', 'cakes']
-    template_name = 'order_form.html'
-    success_url = reverse_lazy('order_list')
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            order = form.save()
+            # Remove existing items if updating
+            if is_update:
+                OrderItem.objects.filter(order=order).delete()
+            # Handle cakes and quantities
+            cakes = request.POST.getlist('cake_id')
+            quantities = request.POST.getlist('quantity')
+            for cake_id, quantity in zip(cakes, quantities):
+                if cake_id and quantity:
+                    OrderItem.objects.create(order=order, cake_id=cake_id, quantity=quantity)
+            return redirect('order_detail', pk=order.pk)
+    else:
+        form = OrderForm(instance=order)
+        if is_update:
+            order_items = OrderItem.objects.filter(order=order)
+        else:
+            order_items = []
+
+    cakes = Cake.objects.all()
+    return render(request, 'order_form.html', {
+        'form': form,
+        'cakes': cakes,
+        'order_items': order_items if pk else [],
+        'is_update': is_update,
+    })
 
 class OrderDeleteView(DeleteView):
     model = Order
