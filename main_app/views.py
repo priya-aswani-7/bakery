@@ -1,6 +1,6 @@
-from django.views.generic import ListView, CreateView, DetailView, EditView, DeleteView
-from django.utils import reverse_lazy
-from models import Cake, Customer
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Cake, Customer
 
 # list view of cakes
 class CakeListView(ListView):
@@ -21,7 +21,7 @@ class CakeCreateView(CreateView):
     success_url=reverse_lazy('cake_list')
 
 # edit cake 
-class CakeEditView(EditView):
+class CakeUpdateView(UpdateView):
     model=Cake
     template_name='./cakes/cake_form.html'
     context_object_name='cake'
@@ -53,7 +53,7 @@ class CustomerCreateView(CreateView):
     success_url=reverse_lazy('customer_list')
 
 # update a customer
-class CustomerEditView(EditView):
+class CustomerUpdateView(UpdateView):
     model=Customer
     template_name='./customers/customer_form.html'
     context_object_name='customer'
