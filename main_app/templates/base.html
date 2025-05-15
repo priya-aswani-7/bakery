@@ -12,15 +12,12 @@
 <body>
     <h1>🧁 Welcome to the Bakery</h1>
     <nav>
-        
-            <a href="/">
-                Home
-            </a> | 
-            <a href="{% url 'cake_list' %}">
-                Cakes
-            </a> | 
-            <a href="{% url 'customer_list' %}">Customers</a>
-        
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'cake_list' %}">Cakes</a></li>
+            <li><a href="{% url 'customer_list' %}">Customers</a></li>
+            <li><a href="{% url 'order_list' %}">Orders</a></li>
+        </ul>
     </nav>
     <br />
     <hr>

@@ -23,6 +23,7 @@ class Customer(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_date = models.DateTimeField(default = timezone.now)
+    cakes = models.ManyToManyField('Cake', through='OrderItem')
     
     @property
     def total_price(self):
@@ -32,14 +33,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.name}"
-    
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     cake = models.ForeignKey(Cake, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-
-    class Meta:
-        unique_together = ('order', 'cake')
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"Order {self.order.id} item: {self.cake.name} x {self.quantity}"
+        return f"{self.quantity} x {self.cake.name} for Order {self.order.id}"

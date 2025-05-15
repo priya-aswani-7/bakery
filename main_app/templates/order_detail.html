@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Order {{ order.id }}</h1>
+  <p>Customer: {{ order.customer.name }}</p>
+  <p>Order Date: {{ order.order_date }}</p>
+  <p>Total Price: ${{ order.total_price }}</p>
+  <h2>Cakes in this Order</h2>
+  <ul>
+    {% for item in order.orderitem_set.all %}
+      <li>
+        {{ item.cake.name }} ({{ item.quantity }})
+        <form action="{% url 'remove_cake_from_order' order.pk item.cake.pk %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">Remove</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No cakes in this order.</li>
+    {% endfor %}
+  </ul>
+  <h3>Add a Cake to this Order</h3>
+  <form method="post">
+    {% csrf_token %}
+    <select name="cake_id">
+      {% for cake in cakes %}
+        <option value="{{ cake.id }}">{{ cake.name }} ({{ cake.flavor }})</option>
+      {% endfor %}
+    </select>
+    <input type="number" name="quantity" min="1" value="1" required>
+    <button type="submit">Add Cake</button>
+  </form>
+  <a href="{% url 'order_update' order.pk %}">Edit</a> |
+  <a href="{% url 'order_delete' order.pk %}">Delete</a> |
+  <a href="{% url 'order_list' %}">Back to Orders</a>
+{% endblock %}

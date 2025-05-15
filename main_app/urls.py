@@ -3,8 +3,10 @@ from .views import (
     CakeListView, CakeDetailView,
     CakeCreateView, CakeUpdateView, CakeDeleteView,
     HomeView,
-    CustomerListView, CustomerCreateView, CustomerDetailView, CustomerUpdateView, CustomerDeleteView
+    CustomerListView, CustomerCreateView, CustomerDetailView, CustomerUpdateView, CustomerDeleteView,
+    OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView,
 )
+from . import views
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -13,9 +15,15 @@ urlpatterns = [
     path('cakes/<int:pk>/', CakeDetailView.as_view(), name='cake_detail'),
     path('cakes/<int:pk>/update/', CakeUpdateView.as_view(), name='cake_update'),
     path('cakes/<int:pk>/delete/', CakeDeleteView.as_view(), name='cake_delete'),
-    path('/customers', CustomerListView.as_view(), name='customer_list'),
-    path('/customers/create', CustomerCreateView.as_view(), name='customer_create'),
-    path('/customers/<int:pk>', CustomerDetailView.as_view(), name='customer_detail'),
-    path('/customers/<int:pk>/update', CustomerUpdateView.as_view(), name='customer_update'),
-    path('/customers/<int:pk>/delete', CustomerDeleteView.as_view(), name='customer_delete')
+    path('customers/', CustomerListView.as_view(), name='customer_list'),
+    path('customers/create/', CustomerCreateView.as_view(), name='customer_create'),
+    path('customers/<int:pk>/', CustomerDetailView.as_view(), name='customer_detail'),
+    path('customers/<int:pk>/update/', CustomerUpdateView.as_view(), name='customer_update'),
+    path('customers/<int:pk>/delete/', CustomerDeleteView.as_view(), name='customer_delete'),
+    path('orders/', OrderListView.as_view(), name='order_list'),
+    path('orders/<int:pk>/', views.order_detail, name='order_detail'),
+    path('orders/create/', OrderCreateView.as_view(), name='order_create'),
+    path('orders/<int:pk>/edit/', OrderUpdateView.as_view(), name='order_update'),
+    path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order_delete'),
+    path('orders/<int:order_id>/remove-cake/<int:cake_id>/', views.remove_cake_from_order, name='remove_cake_from_order'),
 ]
