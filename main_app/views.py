@@ -58,12 +58,14 @@ class CustomerCreateView(CreateView):
     model=Customer
     template_name='./customers/customer_form.html'
     success_url=reverse_lazy('customer_list')
+    fields='__all__'
 
 # update a customer
 class CustomerUpdateView(UpdateView):
     model=Customer
     template_name='./customers/customer_form.html'
     context_object_name='customer'
+    fields='__all__'
     success_url=reverse_lazy('customer_detail')
     
 # delete a customer
