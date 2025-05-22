@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView, CakeDeleteView, 
-                    CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView, HomeView,)
+                    CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView, HomeView,
+                    OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView,
+                    )
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -16,5 +18,9 @@ urlpatterns = [
     path('customers/<int:pk>/update', CustomerUpdateView.as_view(), name='customer_update'),
     path('customers/<int:pk>/delete', CustomerDeleteView.as_view(), name='customer_delete'),
     
-    
+    path('orders/', OrderListView.as_view(), name='order_list'),
+    path('orders/create', OrderCreateView.as_view(), name='order_create'),
+    path('orders/<int:pk>', OrderDetailView.as_view(), name='order_detail'),
+    path('orders/<int:pk>/update', OrderUpdateView.as_view(), name='order_update'),
+    path('orders/<int:pk>/delete', OrderDeleteView.as_view(), name='order_delete'),
 ]
