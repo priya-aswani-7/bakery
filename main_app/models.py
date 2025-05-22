@@ -21,6 +21,7 @@ class Customer(models.Model):
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    cakes = models.ManyToManyField(Cake, through='OrderItem')
     
     def __str__(self):
         return f"Order #{self.id} by {self.customer.name}"
@@ -32,3 +33,6 @@ class OrderItem(models.Model):
     
     def __str__(self):
         return f"Order #{self.order.id} - {self.cake.name} x {self.quantity}"
+
+    class Meta:
+        unique_together = ['cake', 'order']
