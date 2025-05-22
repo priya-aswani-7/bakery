@@ -1,6 +1,6 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from .models import Cake, Customer
+from .models import Cake, Customer, Order
 
 class HomeView(TemplateView):
     template_name = './base.html'
@@ -72,3 +72,39 @@ class CustomerDeleteView(DeleteView):
     template_name='./customers/customer_confirm_delete.html'
     context_object_name='customer'
     success_url=reverse_lazy('customer_list')
+
+# list of orders
+class OrderListView(ListView):
+    model=Order
+    template_name='./orders/order_list.html'
+    context_object_name='orders'
+    
+# view an order in detail
+class OrderDetailView(DetailView):
+    model=Order
+    template_name='./orders/order_detail.html'
+    context_object_name='order'
+
+# create an order
+class OrderCreateView(CreateView):
+    model=Order
+    template_name='./orders/order_form.html'
+    fields='__all__'
+    success_url=reverse_lazy('order_list')    
+    
+# update an order
+class OrderUpdateView(UpdateView):
+    model=Order
+    template_name='./orders/order_form.html'
+    context_object_name='order'
+    fields='__all__'
+    
+    def get_success_url(self):
+        return reverse_lazy('order_detail', kwargs={'pk': self.object.pk})
+    
+# delete an order
+class OrderDeleteView(DeleteView):
+    model=Order
+    template_name='./orders/order_confirm_delete.html'
+    context_object_name='order'
+    success_url=reverse_lazy('order_list')
