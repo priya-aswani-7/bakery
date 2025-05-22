@@ -66,7 +66,9 @@ class CustomerUpdateView(UpdateView):
     template_name='./customers/customer_form.html'
     context_object_name='customer'
     fields='__all__'
-    success_url=reverse_lazy('customer_detail')
+    
+    def get_success_url(self):
+        return reverse_lazy('customer_detail', kwargs={'pk': self.object.pk})
     
 # delete a customer
 class CustomerDeleteView(DeleteView):
