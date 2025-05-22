@@ -85,16 +85,18 @@ class OrderListView(ListView):
     
 # view an order in detail
 class OrderDetailView(DetailView):
-    model=Order
-    template_name='./orders/order_detail.html'
-    context_object_name='order'
+    model = Order
+    template_name = './orders/order_detail.html'
+    context_object_name = 'order'
 
 # create an order
 class OrderCreateView(CreateView):
     model=Order
     template_name='./orders/order_form.html'
-    fields='__all__'
-    success_url=reverse_lazy('order_list')    
+    fields=['customer']
+    
+    def get_success_url(self):
+        return reverse_lazy('order_detail', kwargs={'pk': self.object.pk})  
     
 # update an order
 class OrderUpdateView(UpdateView):
