@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+
+{% block content %}
+<h2>Orders</h2>
+<a href="{% url 'order_create' %}">Create New Order</a>
+<hr>
+{% if orders %}
+    <table>
+        <tr>
+            <th>Order #</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Actions</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.order_date }}</td>
+            <td>{{ order.customer.name }}</td>
+            <td>
+                <a href="{% url 'order_detail' order.pk %}">View</a> |
+                <a href="{% url 'order_update' order.pk %}">Edit</a> |
+                <a href="{% url 'order_delete' order.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No orders available.</p>
+{% endif %}
+{% endblock %}

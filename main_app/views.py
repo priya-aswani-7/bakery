@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from .models import Cake, Customer
+from django.shortcuts import render, redirect
+from .models import Cake, Customer, Order, OrderItem
 
 class HomeView(TemplateView):
     template_name = './base.html'
@@ -57,6 +58,7 @@ class CustomerDetailView(DetailView):
 class CustomerCreateView(CreateView):
     model=Customer
     template_name='./customers/customer_form.html'
+    fields='__all__'
     success_url=reverse_lazy('customer_list')
 
 # update a customer
@@ -64,7 +66,10 @@ class CustomerUpdateView(UpdateView):
     model=Customer
     template_name='./customers/customer_form.html'
     context_object_name='customer'
-    success_url=reverse_lazy('customer_detail')
+    fields='__all__'
+    
+    def get_success_url(self):
+        return reverse_lazy('customer_detail', kwargs={'pk': self.object.pk})
     
 # delete a customer
 class CustomerDeleteView(DeleteView):
@@ -72,3 +77,85 @@ class CustomerDeleteView(DeleteView):
     template_name='./customers/customer_confirm_delete.html'
     context_object_name='customer'
     success_url=reverse_lazy('customer_list')
+
+# list of orders
+class OrderListView(ListView):
+    model = Order
+    template_name = './orders/order_list.html'
+    context_object_name = 'orders'
+
+# detailed view of order
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = './orders/order_detail.html'
+    context_object_name = 'order'
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Get the order
+        order = self.get_object()
+        # Get cakes that aren't in this order
+        context['available_cakes'] = Cake.objects.filter(available=True).exclude(
+            id__in=order.cakes.all().values_list('id')
+        )
+        return context
+
+# create an order
+class OrderCreateView(CreateView):
+    model = Order
+    template_name = './orders/order_form.html'
+    fields = ['customer']
+    success_url = reverse_lazy('order_list')
+
+# update an order
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = './orders/order_form.html'
+    context_object_name = 'order'
+    fields = ['customer']
+    
+    def get_success_url(self):
+        return reverse_lazy('order_detail', kwargs={'pk': self.object.pk})
+    
+# delete an order
+class OrderDeleteView(DeleteView):
+    model = Order
+    template_name = './orders/order_confirm_delete.html'
+    context_object_name = 'order'
+    success_url = reverse_lazy('order_list')
+
+# Functions to add/remove cakes from orders
+def add_cake_to_order(request, order_id, cake_id):
+    # Check if the cake is already in the order
+    try:
+        # If it exists, just increment the quantity
+        order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
+        order_item.quantity += 1
+        order_item.save()
+    except OrderItem.DoesNotExist:
+        # If not, create a new order item
+        OrderItem.objects.create(
+            order_id=order_id,
+            cake_id=cake_id,
+            quantity=1
+        )
+    return redirect('order_detail', pk=order_id)
+
+# Function to remove a cake from an order
+def remove_cake_from_order(request, order_id, cake_id):
+    try:
+        # Find the order item
+        order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
+        
+        # If quantity is more than 1, decrease it
+        if order_item.quantity > 1:
+            order_item.quantity -= 1
+            order_item.save()
+        else:
+            # Otherwise delete the item completely
+            order_item.delete()
+    except OrderItem.DoesNotExist:
+        pass  # If it doesn't exist, do nothing
+    
+    return redirect('order_detail', pk=order_id)

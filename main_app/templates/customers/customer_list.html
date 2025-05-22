@@ -1,4 +1,35 @@
 {% extends '../base.html' %}
 {% block content %}
 <h2>🧑‍🍼 Customers </h2>
+<a href="{% url 'customer_create' %}">Add New Customer</a>
+<hr>
+
+{% if customers %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>
+                    <a href="{% url 'customer_detail' customer.pk %}">View</a> |
+                    <a href="{% url 'customer_update' customer.pk %}">Edit</a> |
+                    <a href="{% url 'customer_delete' customer.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No customers found.</p>
+{% endif %}
 {% endblock %}

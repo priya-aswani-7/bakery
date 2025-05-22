@@ -1,0 +1,74 @@
+{% extends '../base.html' %}
+
+{% block content %}
+<h2>Order #{{ order.id }}</h2>
+<p>Date: {{ order.order_date }}</p>
+<p>Customer: {{ order.customer.name }}</p>
+
+<h3>Order Items</h3>
+<hr>
+{% if order.orderitem_set.all %}
+    <table>
+        <tr>
+            <th>Cake</th>
+            <th>Flavor</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for item in order.orderitem_set.all %}
+        <tr>
+            <td>{{ item.cake.name }}</td>
+            <td>{{ item.cake.flavor }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.cake.price }}</td>
+            <td>
+                <form action="{% url 'add_cake_to_order' order.id item.cake.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">+</button>
+                </form>
+                <form action="{% url 'remove_cake_from_order' order.id item.cake.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">-</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No items in this order.</p>
+{% endif %}
+
+<h3>Available Cakes</h3>
+<hr>
+{% if available_cakes %}
+    <table>
+        <tr>
+            <th>Cake</th>
+            <th>Flavor</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for cake in available_cakes %}
+        <tr>
+            <td>{{ cake.name }}</td>
+            <td>{{ cake.flavor }}</td>
+            <td>${{ cake.price }}</td>
+            <td>
+                <form action="{% url 'add_cake_to_order' order.id cake.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Add to Order</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>All available cakes are already in this order!</p>
+{% endif %}
+
+<hr>
+<a href="{% url 'order_update' order.pk %}">Edit Order</a> |
+<a href="{% url 'order_delete' order.pk %}">Delete Order</a> |
+<a href="{% url 'order_list' %}">Back to Orders</a>
+{% endblock %}

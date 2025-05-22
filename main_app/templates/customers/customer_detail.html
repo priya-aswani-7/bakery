@@ -1,0 +1,41 @@
+{% extends '../base.html' %}
+{% block content %}
+<h2>Customer Details</h2>
+<div class="customer-details">
+    <p><strong>Name:</strong> {{ customer.name }}</p>
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+    <p><strong>Phone:</strong> {{ customer.phone }}</p>
+</div>
+
+<h3>Orders</h3>
+{% if customer.order_set.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in customer.order_set.all %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>
+                    <a href="{% url 'order_detail' order.pk %}">View Order</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No orders found for this customer.</p>
+{% endif %}
+
+<div class="actions">
+    <a href="{% url 'customer_update' customer.pk %}">Edit Customer</a> |
+    <a href="{% url 'customer_delete' customer.pk %}">Delete Customer</a> |
+    <a href="{% url 'customer_list' %}">Back to Customers</a>
+</div>
+{% endblock %}

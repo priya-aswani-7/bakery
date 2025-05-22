@@ -1,0 +1,21 @@
+{% extends '../base.html' %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h2>Are you sure you want to delete {{ customer.name }}?</h2>
+    
+    <div class="customer-info">
+        <p><strong>Email:</strong> {{ customer.email }}</p>
+        <p><strong>Phone:</strong> {{ customer.phone }}</p>
+    </div>
+    
+    {% if customer.order_set.all %}
+    <div class="warning">
+        <p><strong>Warning:</strong> This customer has {{ customer.order_set.all|length }} order(s). Deleting this customer will also delete all associated orders.</p>
+    </div>
+    {% endif %}
+    
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'customer_detail' customer.pk %}">Cancel</a>
+</form>
+{% endblock %}
