@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from .models import Cake, Customer, Order
+from django.shortcuts import render, redirect
+from .models import Cake, Customer, Order, OrderItem
 
 class HomeView(TemplateView):
     template_name = './base.html'
@@ -126,3 +127,19 @@ class OrderDeleteView(DeleteView):
     template_name='./orders/order_confirm_delete.html'
     context_object_name='order'
     success_url=reverse_lazy('order_list')
+    
+def add_cake_to_order(request, order_id, cake_id):
+    # Check if the cake is already in the order
+    try:
+        # If it exists, just increment the quantity
+        order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
+        order_item.quantity += 1
+        order_item.save()
+    except OrderItem.DoesNotExist:
+        # If not, create a new order item
+        OrderItem.objects.create(
+            order_id=order_id,
+            cake_id=cake_id,
+            quantity=1
+        )
+    return redirect('order_detail', pk=order_id)
