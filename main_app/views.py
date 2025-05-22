@@ -88,6 +88,18 @@ class OrderDetailView(DetailView):
     model = Order
     template_name = './orders/order_detail.html'
     context_object_name = 'order'
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Get the order
+        order = self.get_object()
+        # Get cakes that aren't in this order
+        context['available_cakes'] = Cake.objects.filter(available=True).exclude(
+            id__in=order.cakes.all().values_list('id')
+        )
+        return context
+
 
 # create an order
 class OrderCreateView(CreateView):
