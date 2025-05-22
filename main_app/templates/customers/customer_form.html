@@ -1,0 +1,15 @@
+{% extends '../base.html' %}
+{% block content %}
+<h1>
+    {% if customer %}
+    Edit Customer
+    {% else %}
+    Add a Customer
+    {% endif %}
+</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
