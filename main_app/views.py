@@ -54,6 +54,15 @@ class CustomerDetailView(DetailView):
     template_name='./customers/customer_detail.html'
     context_object_name='customer'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = self.get_object()
+        context['available_cakes'] = Cake.objects.exclude(
+            id__in=customer.cake_ratings.all().values_list('id')
+        )
+        
+        return context
+    
 # create a customer
 class CustomerCreateView(CreateView):
     model=Customer
