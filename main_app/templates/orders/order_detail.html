@@ -4,6 +4,41 @@
 <p>Customer: {{order.customer.name}}</p>
 <p>Placed on: {{order.order_date}}</p>
 
+<hr>
+<h3>Cakes Ordered</h3>
+{% if order_items %}
+<table style="text-align: left;">
+    <tr>
+        <th>Cake Name</th>
+        <th>Cake Flavor</th>
+        <th>Cake Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for order_item in order_items %}
+    <tr>
+        <td>{{order_item.cake.name}}</td>
+        <td>{{order_item.cake.flavor}}</td>
+        <td>{{order_item.cake.price}}</td>
+        <td>{{order_item.quantity}}</td>
+        <td>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit">+</button>
+            </form>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit">-</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>There are no items in this order</p>
+{% endif %}
+
 <a href="{% url 'order_update' order.pk %}">Edit</a> | 
 <a href="{% url 'order_delete' order.pk %}">Delete</a>
 {% endblock %}
