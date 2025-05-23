@@ -162,14 +162,14 @@ def add_rating_for_cake(request, customer_id, cake_id):
     try:
         cake_rating = CakeRating.objects.get(customer_id=customer_id, cake_id=cake_id)
         
-        if(cake_rating == 5):
+        if(cake_rating.rating == 5):
             pass
         else:
             cake_rating.rating += 1
             cake_rating.save()
             
     except CakeRating.DoesNotExist:
-        CakeRating.create(customer_id=customer_id, cake_id=cake_id, rating=1)
+        CakeRating.objects.create(customer_id=customer_id, cake_id=cake_id, rating=1)
     
     return redirect('customer_detail', pk=customer_id)
 
@@ -177,7 +177,7 @@ def remove_rating_for_cake(request, customer_id, cake_id):
     try:
         
         cake_rating = CakeRating.objects.get(customer_id=customer_id, cake_id=cake_id)
-        if(cake_rating == 1):
+        if(cake_rating.rating == 1):
             cake_rating.delete()
         else:
             cake_rating.rating -= 1
