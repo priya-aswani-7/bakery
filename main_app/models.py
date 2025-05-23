@@ -14,6 +14,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
+    cake_ratings = models.ManyToManyField(Cake, through='CakeRating')
     
     def __str__(self):
         return f"{self.name}"
