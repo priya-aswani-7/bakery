@@ -17,33 +17,6 @@
 {% endfor %}
 </table>
 
-<h3>Available cakes</h3>
-<hr>
-{% if available_cakes %}
-<table>
-    <tr>
-        <th>Cake</th>
-        <th>Flavor</th>
-        <th>Price</th>
-        <th>Actions</th>
-    </tr>
-
-    {% for cake in available_cakes %}
-    <tr>
-        <td>{{cake.name}}</td>
-        <td>{{cake.flavor}}</td>
-        <td>{{cake.price}}</td>
-        <td>
-            <form action="{% url 'add_cake_to_order' order.id cake.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Add to Order</button>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
-
 <a href="{% url 'order_update' order.pk %}">Edit</a> | 
 <a href="{% url 'order_delete' order.pk %}">Delete</a>
 {% endblock %}
