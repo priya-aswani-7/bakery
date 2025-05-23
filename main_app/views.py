@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
-from .models import Cake, Customer, Order, OrderItem
+from django.shortcuts import redirect
+from .models import Cake, Customer, Order, OrderItem, CakeRating
 
 class HomeView(TemplateView):
     template_name = './base.html'
@@ -157,3 +157,34 @@ def remove_cake_from_order(request, order_id, cake_id):
         pass
     
     return redirect('order_detail', pk=order_id)
+
+def add_rating_for_cake(request, customer_id, cake_id):
+    try:
+        cake_rating = CakeRating.objects.get(customer_id=customer_id, cake_id=cake_id)
+        
+        if(cake_rating == 5):
+            pass
+        else:
+            cake_rating.rating += 1
+            cake_rating.save()
+            
+    except CakeRating.DoesNotExist:
+        CakeRating.create(customer_id=customer_id, cake_id=cake_id, rating=1)
+    
+    return redirect('customer_detail', pk=customer_id)
+
+def remove_rating_for_cake(request, customer_id, cake_id):
+    try:
+        
+        cake_rating = CakeRating.objects.get(customer_id=customer_id, cake_id=cake_id)
+        if(cake_rating == 1):
+            cake_rating.delete()
+        else:
+            cake_rating.rating -= 1
+            cake_rating.save()
+            
+    except CakeRating.DoesNotExist:
+        pass
+    
+    return redirect('customer_detail', pk=customer_id)
+        
