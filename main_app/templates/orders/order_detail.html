@@ -6,7 +6,7 @@
 
 <hr>
 <h3>Cakes Ordered</h3>
-{% if order_items %}
+{% if order.orderitem_set.all %}
 <table style="text-align: left;">
     <tr>
         <th>Cake Name</th>
@@ -16,18 +16,18 @@
         <th>Actions</th>
     </tr>
 
-    {% for order_item in order.order_items_set.all %}
+    {% for order_item in order.orderitem_set.all %}
     <tr>
         <td>{{order_item.cake.name}}</td>
         <td>{{order_item.cake.flavor}}</td>
         <td>{{order_item.cake.price}}</td>
         <td>{{order_item.quantity}}</td>
         <td>
-            <form action="{% url 'add_cake_to_order' order.id order_item.cake.id %}" method="POST">
+            <form action="{% url 'add_cake_to_order' order.id order_item.cake.id %}" method="POST" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">+</button>
             </form>
-            <form action="{% url 'remove_cake_from_order' order.id order_item.cake.id %}" method="POST">
+            <form action="{% url 'remove_cake_from_order' order.id order_item.cake.id %}" method="POST" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">-</button>
             </form>
