@@ -39,6 +39,35 @@
 <p>There are no items in this order</p>
 {% endif %}
 
+<hr>
+<h3>Available Cakes</h3>
+{% if available_cakes %}
+<table style="text-align: left;">
+    <tr>
+        <th>Cake Name</th>
+        <th>Cake Flavor</th>
+        <th>Cake Price</th>
+        <th>Action</th>
+    </tr>
+
+    {% for cake in available_cakes %}
+    <tr>
+        <td>{{cake.name}}</td>
+        <td>{{cake.flavor}}</td>
+        <td>{{cake.price}}</td>
+        <td>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit">Add to order</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>All available cakes are already in this order!</p>
+{% endif %}
+
 <a href="{% url 'order_update' order.pk %}">Edit</a> | 
 <a href="{% url 'order_delete' order.pk %}">Delete</a>
 {% endblock %}
