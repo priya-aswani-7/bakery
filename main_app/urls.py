@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView, CakeDeleteView, 
                     CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView, HomeView,
                     OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView,
-                    add_cake_to_order, remove_cake_from_order
+                    add_cake_to_order, remove_cake_from_order, add_rating_for_cake, remove_rating_for_cake
                     )
 
 urlpatterns = [
@@ -26,5 +26,8 @@ urlpatterns = [
     path('orders/<int:pk>/delete', OrderDeleteView.as_view(), name='order_delete'),
     
     path('orders/<int:order_id>/add-cake/<int:cake_id>', add_cake_to_order, name='add_cake_to_order'),
-    path('orders/<int:order_id>/remove-cake/<int:cake_id>', remove_cake_from_order, name='remove_cake_from_order')
+    path('orders/<int:order_id>/remove-cake/<int:cake_id>', remove_cake_from_order, name='remove_cake_from_order'),
+
+    path('customers/<int:customer_id>/add-cake-rating/<int:cake_id>', add_rating_for_cake, name='add_rating_for_cake'),
+    path('customers/<int:customer_id>/remove-cake-rating/<int:cake_id>', remove_rating_for_cake, name='remove_rating_for_cake')
 ]
