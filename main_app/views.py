@@ -90,6 +90,13 @@ class OrderDetailView(DetailView):
     template_name = './orders/order_detail.html'
     context_object_name = 'order'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.get_object()
+        context['available_cakes'] = Cake.objects.exclude(
+            id__in=order.cakes.all().values_list('id')
+        )
+        return context    
 
 # create an order
 class OrderCreateView(CreateView):
@@ -117,3 +124,13 @@ class OrderDeleteView(DeleteView):
     context_object_name='order'
     success_url=reverse_lazy('order_list')
     
+def add_cake_to_order(request, order_id, cake_id):
+    try:
+        order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
+        order_item.quantity += 1
+        order_item.save()
+    except OrderItem.DoesNotExist:
+        OrderItem.objects.create(order_id=order_id, cake_id=cake_id, quantity=1)
+        
+    return redirect('order_detail', pk=order_id)
+
