@@ -36,3 +36,14 @@ class OrderItem(models.Model):
 
     class Meta:
         unique_together = ['cake', 'order']
+    
+class CakeRating(models.Model):
+    cake=models.ForeignKey(Cake, on_delete=models.CASCADE)
+    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
+    rating=models.IntegerField()
+    
+    def __str__(self):
+        return f"Customer {self.customer.name} rated {self.cake.name} ({self.cake.flavor}): {self.rating}"
+    
+    class Meta:
+        unique_together = ['cake', 'customer']
