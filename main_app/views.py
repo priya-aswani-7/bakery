@@ -90,17 +90,6 @@ class OrderDetailView(DetailView):
     template_name = './orders/order_detail.html'
     context_object_name = 'order'
     
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Get the order
-        order = self.get_object()
-        # Get cakes that aren't in this order
-        context['available_cakes'] = Cake.objects.filter(available=True).exclude(
-            id__in=order.cakes.all().values_list('id')
-        )
-        return context
-
 
 # create an order
 class OrderCreateView(CreateView):
@@ -128,18 +117,3 @@ class OrderDeleteView(DeleteView):
     context_object_name='order'
     success_url=reverse_lazy('order_list')
     
-def add_cake_to_order(request, order_id, cake_id):
-    # Check if the cake is already in the order
-    try:
-        # If it exists, just increment the quantity
-        order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
-        order_item.quantity += 1
-        order_item.save()
-    except OrderItem.DoesNotExist:
-        # If not, create a new order item
-        OrderItem.objects.create(
-            order_id=order_id,
-            cake_id=cake_id,
-            quantity=1
-        )
-    return redirect('order_detail', pk=order_id)
