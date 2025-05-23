@@ -147,4 +147,4 @@ def remove_cake_from_order(request, order_id, cake_id):
     except OrderItem.DoesNotExist:
         pass
     
-    redirect('order_detail', pk=order_id)
+    return redirect('order_detail', pk=order_id)
