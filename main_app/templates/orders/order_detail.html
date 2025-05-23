@@ -4,19 +4,6 @@
 <p>Customer: {{order.customer.name}}</p>
 <p>Placed on: {{order.order_date}}</p>
 
-<table style="text-align:left;">
-    <tr>
-        <th>Cake name</th>
-        <th>Cake Quantity</th>
-    </tr>
-{% for order_item in order.orderitem_set.all %}
-    <tr>
-        <td>{{order_item.cake.name}} ({{order_item.cake.flavor}})</td>
-        <td>{{order_item.quantity}}</td>
-    </tr>
-{% endfor %}
-</table>
-
 <a href="{% url 'order_update' order.pk %}">Edit</a> | 
 <a href="{% url 'order_delete' order.pk %}">Delete</a>
 {% endblock %}
