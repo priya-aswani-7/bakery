@@ -134,7 +134,7 @@ def add_cake_to_order(request, order_id, cake_id):
         
     return redirect('order_detail', pk=order_id)
 
-def remove_cake_from_oder(request, order_id, cake_id):
+def remove_cake_from_order(request, order_id, cake_id):
     try:
         order_item = OrderItem.objects.get(order_id=order_id, cake_id=cake_id)
         
