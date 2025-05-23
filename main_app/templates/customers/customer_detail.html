@@ -4,6 +4,8 @@
 <p>Email: {{customer.email}}</p>
 <p>Phone: {{customer.phone}}</p>
 
+<a href="{% url 'customer_update' customer.pk %}">Edit</a> | 
+<a href="{% url 'customer_delete' customer.pk %}">Delete</a> 
 <hr>
 <h3>Cakes you've already rated</h3>
 {% if customer.cakerating_set.all %}
@@ -36,7 +38,32 @@
 {% else %}
 <p>You have no cake ratings!</p>
 {% endif %}
+<hr>
 
-<a href="{% url 'customer_update' customer.pk %}">Edit</a> | 
-<a href="{% url 'customer_delete' customer.pk %}">Delete</a> 
+<h3>Cakes ready to be rated</h3>
+{% if available_cakes %}
+<table>
+    <tr>
+        <th>Cake Name</th>
+        <th>Cake Flavor</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for cake in available_cakes %}
+    <tr>
+        <td>{{cake.name}}</td>
+        <td>{{cake.flavor}}</td>
+        <td>
+            <form action="" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Rate it!</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>You have rated all available cakes! Good job!</p>
+{% endif %}
+
 {% endblock %}
