@@ -23,11 +23,11 @@
         <td>{{rating.cake.flavor}}</td>
         <td>{{rating.rating}}</td>
         <td>
-            <form action="" method="POST" style="display:inline;">
+            <form action="{% url 'add_rating_for_cake' customer.id rating.cake.id %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit">+</button>
             </form>
-            <form action="" submit="POST" style="display:inline;">
+            <form action="{% url 'remove_rating_for_cake' customer.id rating.cake.id %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit">-</button>
             </form>
@@ -54,7 +54,7 @@
         <td>{{cake.name}}</td>
         <td>{{cake.flavor}}</td>
         <td>
-            <form action="" method="POST" style="display: inline;">
+            <form action="{% url 'add_rating_for_cake' customer.id cake.id %}" method="POST" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">Rate it!</button>
             </form>
