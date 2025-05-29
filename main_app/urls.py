@@ -2,7 +2,9 @@ from django.urls import path
 from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView, CakeDeleteView, 
                     CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView, HomeView,
                     OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView,
-                    add_cake_to_order, remove_cake_from_order, add_rating_for_cake, remove_rating_for_cake
+                    add_cake_to_order, remove_cake_from_order, add_rating_for_cake, remove_rating_for_cake,
+                    IngredientListView, IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
+                    
                     )
 
 urlpatterns = [
@@ -29,5 +31,12 @@ urlpatterns = [
     path('orders/<int:order_id>/remove-cake/<int:cake_id>', remove_cake_from_order, name='remove_cake_from_order'),
 
     path('customers/<int:customer_id>/add-cake-rating/<int:cake_id>', add_rating_for_cake, name='add_rating_for_cake'),
-    path('customers/<int:customer_id>/remove-cake-rating/<int:cake_id>', remove_rating_for_cake, name='remove_rating_for_cake')
+    path('customers/<int:customer_id>/remove-cake-rating/<int:cake_id>', remove_rating_for_cake, name='remove_rating_for_cake'),
+
+    path('ingredients/', IngredientListView.as_view(), name='ingredient_list'),
+    path('ingredients/create', IngredientCreateView.as_view(), name='ingredient_create'),
+    path('ingredients/<int:pk>', IngredientDetailView.as_view(), name='ingredient_detail'),
+    path('ingredients/<int:pk>/update', IngredientUpdateView.as_view(), name='ingredient_update'),
+    path('ingredients/<int:pk>/delete', IngredientDeleteView.as_view(), name='ingredient_delete'),
+    
 ]
