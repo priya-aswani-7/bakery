@@ -3,8 +3,8 @@ from .views import (CakeListView, CakeDetailView, CakeCreateView, CakeUpdateView
                     CustomerListView, CustomerDetailView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView, HomeView,
                     OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView,
                     add_cake_to_order, remove_cake_from_order, add_rating_for_cake, remove_rating_for_cake,
-                    IngredientListView, IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
-                    
+                    IngredientListView, IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView,
+                    add_ingredient_to_cake, remove_ingredient_from_cake                    
                     )
 
 urlpatterns = [
@@ -38,5 +38,8 @@ urlpatterns = [
     path('ingredients/<int:pk>', IngredientDetailView.as_view(), name='ingredient_detail'),
     path('ingredients/<int:pk>/update', IngredientUpdateView.as_view(), name='ingredient_update'),
     path('ingredients/<int:pk>/delete', IngredientDeleteView.as_view(), name='ingredient_delete'),
+    
+    path('cakes/<int:cake_id>/add-ingredient/<int:ingredient_id>', add_ingredient_to_cake, name='add_ingredient_to_cake'),
+    path('cakes/<int:cake_id>/remove-ingredient/<int:ingredient_id>', remove_ingredient_from_cake, name='remove_ingredient_from_cake')
     
 ]

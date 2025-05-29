@@ -8,7 +8,7 @@
 
 <h3>Ingredients in this Cake</h3>
 <hr>
-{% if cake.ingredients_set.all %}
+{% if cake.ingredients.all %}
 <table style="text-align: left;">
     <tr>
         <th>Name</th>
@@ -17,7 +17,7 @@
         <th>Country of Origin</th>
         <th>Actions</th>
     </tr>
-{% for ingredient in cake.ingredients_set.all %}
+{% for ingredient in cake.ingredients.all %}
     <tr>
         <td>{{ingredient.name}}</td>
         <td>{{ingredient.flavor}}</td>
