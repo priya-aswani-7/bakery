@@ -48,3 +48,12 @@ class CakeRating(models.Model):
     
     class Meta:
         unique_together = ['cake', 'customer']
+        
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+    color = models.CharField(max_length=20)
+    flavor = models.CharField(max_length=20)
+    country_of_origin = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return f"{self.name} ({self.flavor}) from {self.country_of_origin}"
