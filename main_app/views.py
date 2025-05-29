@@ -18,6 +18,15 @@ class CakeDetailView(DetailView):
     template_name='./cakes/cake_detail.html'
     context_object_name='cake'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cake = self.get_object()
+        context['available_ingredients'] = Ingredient.objects.exclude(
+            id__in=cake.ingredients.all().values_list('id')
+        )
+        
+        return context
+    
 # create cake
 class CakeCreateView(CreateView):
     model=Cake
