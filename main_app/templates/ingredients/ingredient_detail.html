@@ -1,0 +1,9 @@
+{% extends '../base.html' %}
+{% block content %}
+<h2>{{ingredient.name}} ({{ingredient.flavor}})</h2>
+<p>Color: {{ingredient.color}}</p>
+<p>Country of Origin: {{ingredient.country_of_origin}}</p>
+
+<a href="{% url 'ingredient_update' ingredient.pk %}">Edit</a> | 
+<a href="{% url 'ingredient_delete' ingredient.pk %}">Delete</a>
+{% endblock %}
