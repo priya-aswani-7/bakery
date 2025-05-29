@@ -15,6 +15,7 @@
         <th>Flavor</th>
         <th>Color</th>
         <th>Country of Origin</th>
+        <th>Actions</th>
     </tr>
 {% for ingredient in cake.ingredients_set.all %}
     <tr>
@@ -22,6 +23,12 @@
         <td>{{ingredient.flavor}}</td>
         <td>{{ingredient.color}}</td>
         <td>{{ingredient.country_of_origin}}</td>
+        <td>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit">Remove from cake</button>
+            </form>
+        </td>
     </tr>
 {% endfor %}
 </table>
