@@ -4,8 +4,32 @@
 <p>Price: {{cake.price}}</p>
 <p>Available: {{cake.available}}</p>
 
-<form action="" method="">
-    {% csrf_token %}
-    <a href="{% url 'cake_update' cake.pk %}">Edit</a> | <a href="{% url 'cake_delete' cake.pk %}">Delete</a>
-</form>
+<a href="{% url 'cake_update' cake.pk %}">Edit</a> | <a href="{% url 'cake_delete' cake.pk %}">Delete</a>
+
+<h3>Ingredients in this Cake</h3>
+<hr>
+{% if cake.ingredients_set.all %}
+<table style="text-align: left;">
+    <tr>
+        <th>Name</th>
+        <th>Flavor</th>
+        <th>Color</th>
+        <th>Country of Origin</th>
+    </tr>
+{% for ingredient in cake.ingredients_set.all %}
+    <tr>
+        <td>{{ingredient.name}}</td>
+        <td>{{ingredient.flavor}}</td>
+        <td>{{ingredient.color}}</td>
+        <td>{{ingredient.country_of_origin}}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<p>This cake currently has no ingredients!</p>
+{%  endif %}
+
+
+<h3>Available Ingredients</h3>
+<hr>
 {% endblock %}
