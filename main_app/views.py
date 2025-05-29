@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from .models import Cake, Customer, Order, OrderItem, CakeRating
+from .models import Cake, Customer, Order, OrderItem, CakeRating, Ingredient
 
 class HomeView(TemplateView):
     template_name = './base.html'
@@ -187,4 +187,42 @@ def remove_rating_for_cake(request, customer_id, cake_id):
         pass
     
     return redirect('customer_detail', pk=customer_id)
+
+# list of ingredients
+class IngredientListView(ListView):
+    model=Ingredient
+    template_name='./ingredients/ingredient_list.html'
+    context_object_name='ingredients'
+
+# view an ingredient in detail
+class IngredientDetailView(DetailView):
+    model=Ingredient
+    template_name='./ingredients/ingredient_detail.html'
+    context_object_name='ingredient'
+    
+# create ingredient
+class IngredientCreateView(CreateView):
+    model=Ingredient
+    template_name='./ingredients/ingredient_form.html'
+    fields='__all__'
+
+    success_url=reverse_lazy('ingredient_list')
+    
+# update ingredient
+class IngredientUpdateView(UpdateView):
+    model=Ingredient
+    template_name='./ingredients/ingredient_form.html'
+    fields='__all__'
+    context_object_name='ingredient'
+    
+    def get_success_url(self):
+        return reverse_lazy('ingredient_detail', kwargs={'pk': self.object.pk})
+    
+# delete ingredient
+class IngredientDeleteView(DeleteView):
+    model=Ingredient
+    template_name='./ingredients/ingredient_confirm_delete.html'
+    context_object_name='ingredient'
+    
+    success_url=reverse_lazy('ingredient_list')
         
