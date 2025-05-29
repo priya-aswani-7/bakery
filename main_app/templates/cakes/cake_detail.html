@@ -32,4 +32,33 @@
 
 <h3>Available Ingredients</h3>
 <hr>
+{% if available_ingredients %}
+<table style="text-align: left;">
+    <tr>
+        <th>Name</th>
+        <th>Flavor</th>
+        <th>Color</th>
+        <th>Country of Origin</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for ingredient in available_ingredients %}
+    <tr>
+        <td>{{ingredient.name}}</td>
+        <td>{{ingredient.flavor}}</td>
+        <td>{{ingredient.color}}</td>
+        <td>{{ingredient.country_of_origin}}</td>
+        <td>
+            <form action="" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Add ingredient</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>All available ingredients are already in the cake!</p>
+{% endif %}
+
 {% endblock %}
