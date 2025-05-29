@@ -234,4 +234,12 @@ class IngredientDeleteView(DeleteView):
     context_object_name='ingredient'
     
     success_url=reverse_lazy('ingredient_list')
+
+def add_ingredient_to_cake(request, cake_id, ingredient_id):
+    Cake.objects.get(cake_id=cake_id).ingredients.add(ingredient_id)
+    return redirect('cake_detail', cake_id=cake_id)
+
+def remove_ingredient_from_cake(request, cake_id, ingredient_id):
+    Cake.objects.get(cake_id=cake_id).ingredients.remove(ingredient_id)
+    return redirect('cake_detail', cake_id=cake_id)
         
