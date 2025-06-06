@@ -22,12 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-698tj-l^at#*%+uugplzkdu_$)9y%x)6iwt+17=s$koq8g*!vi'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-698tj-l^at#*%+uugplzkdu_$)9y%x)6iwt+17=s$koq8g*!vi')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
+# Set allowed hosts based on environment
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS = ['*.onrender.com', 'bakery-app.onrender.com']
 
 
 # Application definition
@@ -76,12 +79,23 @@ WSGI_APPLICATION = 'bakery.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bakery',
+# Use different database configuration based on environment
+if DEBUG:
+    # Local development database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'bakery',
+        }
     }
-}
+else:
+    # Production database from environment variable provided by Render
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
