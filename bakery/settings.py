@@ -30,7 +30,11 @@ DEBUG = 'RENDER' not in os.environ
 # Set allowed hosts based on environment
 ALLOWED_HOSTS = []
 if not DEBUG:
-    ALLOWED_HOSTS = ['*.onrender.com', 'bakery-app.onrender.com']
+    # Update with your actual domain from the logs
+    ALLOWED_HOSTS = ['bakery-t1sw.onrender.com', '*.onrender.com']
+    
+    # Set CSRF trusted origins for secure forms
+    CSRF_TRUSTED_ORIGINS = ['https://bakery-t1sw.onrender.com']
 
 
 # Application definition
@@ -140,6 +144,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if not DEBUG:
     # Enable the WhiteNoise storage backend
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    # Security settings for production
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
